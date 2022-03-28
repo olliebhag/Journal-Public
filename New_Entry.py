@@ -61,7 +61,6 @@ def title_check():
         smalltitle.grid(row=5,column=2, pady = 2, padx= 5) ##leaves pixel space between adjacent objects
     
 
-
 def write_journal():
     import os
     
@@ -92,6 +91,10 @@ def write_journal():
 
     newEntry()
 
+def mainmenu():
+    import os
+    os.system('python mainmenu.py')
+
 def newEntry():
     import sqlite3
     ## tutorial from https://likegeeks.com/python-sqlite3-tutorial/#Create_Connection
@@ -120,6 +123,7 @@ def newEntry():
     sql_insert(con, entities)
 
     root.destroy()
+    mainmenu()
 
 
 

@@ -110,6 +110,13 @@ def existing_entry():
        
        sql_update(con)
 
+
+    def mainmenu():
+        root2.destroy()
+        import os
+        os.system('python mainmenu.py')
+
+
     root2 = tk.Tk()
 
     root2.title("Edit an entry")
@@ -178,7 +185,7 @@ def existing_entry():
     journal_text.grid(row=4, column=1)
 
     ##button to trigger command / submit stuff
-    get_button= button = tk.Button(existframe,text="Save entry", font= ('Helvetica', 18, ),command=lambda: [write_journal(), updateEntry()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
+    get_button= button = tk.Button(existframe,text="Save entry", font= ('Helvetica', 18, ),command=lambda: [write_journal(), updateEntry(),mainmenu()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
     get_button.grid(row=2, column=2)
 
 

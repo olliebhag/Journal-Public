@@ -48,70 +48,12 @@ def lengthcheck():
         newDB()
         logintable()
         newuser()
+        closewindow()
         mainmenu()
     else :
         length_label = tk.Label(frame,text="Credentials too short", font="20")
         length_label.grid(row=3,column=3, pady = 2, padx= 5)
 
-
-def existingUser():
-    username = str(user_entry.get())
-    passwordinput = str(password_entry.get()) 
-    import bcrypt
-    import sqlite3
-
-
-    # Encode the inputted password:
-    passwordinput = passwordinput.encode('utf-8')
-
-    # Encrypt the stored pasword:
-    #hashedinput = bcrypt.hashpw(passwordinput, bcrypt.gensalt(10)) 
-
-    filecon = sqlite3.connect("Journal.db")
-    cursorObj = filecon.cursor()
-
-    cursorObj.execute("SELECT Password FROM Login2 WHERE Username = ?", (username,)) ##IMPORTANT COMMA HERE
-    gethashdb=cursorObj.fetchall()
-    print (gethashdb)
-    gethashdb=str(gethashdb)
-    
-    
-    replacelist1_hash= gethashdb.replace("[(", "")
-    replacelist2_hash= replacelist1_hash.replace(",)]", "")
-
-    print("The list stripped hash is "+replacelist2_hash)
-
-    replacelist3_hash=replacelist2_hash.replace("b'", "")
-    replacelist4_hash=replacelist3_hash.replace("'", "")
-
-    hasheddb= replacelist4_hash
-    hasheddb= hasheddb.encode('utf-8')
-    
-    print ("The stripped hash is "+str(hasheddb))
-
-    # Use conditions to compare the authenticating password with the stored one:
-    if bcrypt.checkpw(passwordinput, hasheddb):
-        print("login success")
-        existingzip()
-        generate_existing_user_date()
-        
-        closewindow()
-        mainmenu()
-        
-    else:
-        wrongpass_label = tk.Label(frame,text= "Incorrect login")
-        wrongpass_label.grid(row=6, column=1)
-
-def existingzip():
-    import os.path
-    user_profile = os.environ['USERPROFILE']
-
-
-    password= str(password_entry.get()) 
-
-    import py7zr
-    with py7zr.SevenZipFile(user_profile+"/Desktop/journalzip.7z", 'r', password=password) as archive:
-        archive.extractall(path=user_profile+"/Desktop/")
 
 
 
@@ -140,7 +82,6 @@ def date():
 date()
 
 def mainmenu():
-    
     import os
     os.system('python mainmenu.py')
 
