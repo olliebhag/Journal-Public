@@ -230,13 +230,13 @@ tree_frame= tk.Frame(root,bg= "#34568B")
 tree_frame.place(relx=0.05, rely=0.05, relwidth=0.9, relheight=0.8)
 
 ##Scrollbar
-tree_scroll = Scrollbar(tree_frame)
+tree_scroll = Scrollbar(tree_frame, )
 #tree_scroll.pack()
-tree_scroll.grid(row=0,column=1) ##places scrollbar for the treeview
+tree_scroll.grid(row=0,column=1, ) ##places scrollbar for the treeview
 
 ##Treeview
 tree = ttk.Treeview(tree_frame, yscrollcommand=tree_scroll.set, 
-column=("c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9"), show='headings')
+column=("c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10","c11"), show='headings')
 ##sets number of columns to display
 
 
@@ -262,13 +262,19 @@ tree.column("#6", anchor=tk.CENTER,width=60)
 tree.heading("#6", text="Year")
 
 tree.column("#7", anchor=tk.CENTER,width=60)
-tree.heading("#7", text="Mood")
+tree.heading("#7", text="Hour")
 
-tree.column("#8", anchor=tk.CENTER,width=80)
-tree.heading("#8", text="Label")
+tree.column("#8", anchor=tk.CENTER,width=60)
+tree.heading("#8", text="Minute")
 
-tree.column("#9", anchor=tk.CENTER,width=90)
-tree.heading("#9", text="WordCount")
+tree.column("#9", anchor=tk.CENTER,width=60)
+tree.heading("#9", text="Mood")
+
+tree.column("#10", anchor=tk.CENTER,width=90)
+tree.heading("#10", text="Label")
+
+tree.column("#11", anchor=tk.CENTER,width=90)
+tree.heading("#11", text="WordCount")
 
 tree.grid(row=0, column=0)
 
@@ -429,7 +435,14 @@ def closewindow():
     root.destroy()
 ##from https://www.geeksforgeeks.org/how-to-close-a-window-in-tkinter/
 
-close_button = tk.Button(tree_frame, text= "close", command= lambda:[closewindow()])
+
+def mainmenu():
+    import os
+    os.system('python mainmenu.py')
+
+
+
+close_button = tk.Button(tree_frame, text= "Go Back", command= lambda:[closewindow(), mainmenu()])
 close_button.grid(row=6, column=6)
 
 edit_button = tk.Button(tree_frame, text="Edit",command=lambda: [getfilepath(), gettitle(), getlabel(), getmood(), closewindow(),existing_entry(), ])
@@ -438,13 +451,4 @@ edit_button.grid(row=5)
 
 root.mainloop()
 
-#do the existing entry editor next
-
-##then make main menu where everything links
-
-##switching tkinter frames
-
-##learn how to pass into functions
-
-##ollie
 
