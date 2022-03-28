@@ -1,7 +1,6 @@
-##----------------------Existing entry stuff
+##----------------------Existing entry stuff------------------
 
 
-from cProfile import label
 from tkinter import ttk ## from https://www.activestate.com/resources/quick-reads/how-to-display-data-in-a-table-using-tkinter/
 
 from tkinter.ttk import Treeview, Scrollbar 
@@ -10,24 +9,6 @@ import tkinter as tk
 
 import sqlite3
 
-
-def View():
-
-    con1 = sqlite3.connect("Journal.db")
-
-    cur1 = con1.cursor() ##uses sql cursor
-
-    cur1.execute("SELECT * FROM Entries")
-
-    rows = cur1.fetchall()    
-
-    for row in rows:
-
-        print(row) 
-
-        tree.insert("", tk.END, values=row) ##inserts values into treeview
-
-    con1.close() ##closes connection
 
 
 def existing_entry():
@@ -156,14 +137,6 @@ def existing_entry():
     journal_label.grid(row=4, column=0)
 
 
-    ##testing reading from textfile
-    #example_file= "C:/Users/Ollie/Desktop/journal_text/11.02.2022/no3.txt"
-    #with open(example_file) as f:
-    #    lines = f.readlines()
-    #    print (str(lines))
-    #    str_lines= (str(lines))
-    ##messed about for too long using readlines instead of just read
-
     print ("the old filepath is "+filepath)
     replaceslash_filepath= filepath.replace("\\\\", "/") ##from https://www.geeksforgeeks.org/python-string-replace/
     
@@ -203,21 +176,27 @@ def existing_entry():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ##----------------Treeview--------------------------------------------------
+
+def View():
+
+    con1 = sqlite3.connect("Journal.db")
+
+    cur1 = con1.cursor() ##uses sql cursor
+
+    cur1.execute("SELECT * FROM Entries")
+    #selects all entry records
+
+    rows = cur1.fetchall()    
+
+    for row in rows:
+
+        print(row) 
+
+        tree.insert("", tk.END, values=row) ##inserts values into treeview
+
+    con1.close() ##closes connection
+
 
 root = tk.Tk()
 root.title("Previous entries")
@@ -231,7 +210,6 @@ tree_frame.place(relx=0.05, rely=0.05, relwidth=0.9, relheight=0.8)
 
 ##Scrollbar
 tree_scroll = Scrollbar(tree_frame, )
-#tree_scroll.pack()
 tree_scroll.grid(row=0,column=1, ) ##places scrollbar for the treeview
 
 ##Treeview
@@ -279,21 +257,17 @@ tree.heading("#11", text="WordCount")
 tree.grid(row=0, column=0)
 
 display_button = tk.Button(tree_frame, text="Display data", command=View)
+#inserts data into table from database
 
 display_button.grid(row=2, column=0, pady=10)
 
 key_label = tk.Label(tree_frame, text="Enter ID for entry\nto edit:")
-
 key_label.grid(row=3, column=0)
 
 key_entry=tk.Entry(tree_frame)
-
 key_entry.grid(row=4, column=0)
 
-edit_button = tk.Button(tree_frame, text="Edit",)
-
-edit_button.grid(row=5)
-
+##keep commenting youll get there
 
 
 def getfilepath():
@@ -439,7 +413,6 @@ def closewindow():
 def mainmenu():
     import os
     os.system('python mainmenu.py')
-
 
 
 close_button = tk.Button(tree_frame, text= "Go Back", command= lambda:[closewindow(), mainmenu()])
