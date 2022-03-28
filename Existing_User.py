@@ -3,7 +3,7 @@ global attempts
 attempts = 0
 attempts = int(attempts) 
 
-def attempts():
+def attempt_count():
     global attempts
     attempts = attempts + 1
     if attempts== 5:
@@ -12,8 +12,7 @@ def attempts():
         existingUser()
 
 def existingUser():
-
-    
+ 
 
     username = str(user_entry.get())
     passwordinput = str(password_entry.get()) 
@@ -157,7 +156,7 @@ def generate_existing_user_date():
         datesuccess_label = tk.Label(frame,text= "The folder for todays date has been created")
         datesuccess_label.grid(row=5, column=1)
 
-existing_button = tk.Button(frame,text="Log in as existing user", command=lambda: [attempts()])
+existing_button = tk.Button(frame,text="Log in as existing user", command=lambda: [attempt_count()])
 existing_button.grid(row=3,column=1)
 
 #enter_button = tk.Button(frame,text= "Enter program (fake)")
