@@ -1,4 +1,5 @@
 
+from this import d
 import tkinter as tk ##from https://www.youtube.com/watch?v=D8-snVfekto&list=PLsmaE85R7RwyaAqcLC_XQlKuNbEQSy5Nv&index=1&t
 from tkinter import scrolledtext
 from tkinter.ttk import OptionMenu
@@ -48,13 +49,20 @@ def get_mood():
     output= tk.Label(frame,text=options.get()) 
     output.grid(row=3, column=4)
 
-def get_journal():
-    
-    #output= tk.Label(frame,text=journal_text.get("1.0","end")) ##https://www.delftstack.com/howto/python-tkinter/how-to-get-the-input-from-tkinter-text-box/
-    #output.grid(row=3, column=5) 
-    #print (journal_text.get("1.0","end")) ## because extra arguments needed for text box vs entry
 
-    write_journal()
+
+def title_check():
+    title = title_entry.get()
+    titlelength = len(title)
+    if titlelength>=2:
+        write_journal()
+    
+    else:
+        smalltitle = tk.Label(frame,text="Two characters needed for title",)
+        smalltitle.grid(row=5,column=2, pady = 2, padx= 5) ##leaves pixel space between adjacent objects
+
+        
+
 
 def write_journal():
     import os
@@ -167,7 +175,7 @@ journal_text = scrolledtext.ScrolledText(frame,width=40,height=30)
 journal_text.grid(row=4, column=1)
 
 ##button to trigger command / submit stuff
-get_button= button = tk.Button(frame,text="Save Entry",font= ('Helvetica', 18, ), command=lambda: [get_title(), get_mood(), get_journal()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
+get_button= button = tk.Button(frame,text="Save Entry",font= ('Helvetica', 18, ), command=lambda: [get_title(), get_mood(), title_check()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
 get_button.grid(row=5, column=1, pady = 10, padx= 5)
 
 def trends():
