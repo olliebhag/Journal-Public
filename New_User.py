@@ -3,16 +3,11 @@ def newuser():
     ##direct from https://www.makeuseof.com/encrypt-password-in-python-bcrypt/
     import bcrypt
 
-    
-    
-
     # Encode the stored password:
     password = str(password_entry.get())
 
     password = password.encode('utf-8')
     
-
-
     # Encrypt the stored password:
     hashed = bcrypt.hashpw(password, bcrypt.gensalt(10)) 
 
@@ -33,7 +28,6 @@ def newuser():
 
     sql_insert(con, entities)
 
-    #print (password)    
 
 def lengthcheck():
     global username
@@ -43,7 +37,10 @@ def lengthcheck():
     password = str(password_entry.get())
     usernamelength = len(username)
     passwordlength = len(password)
+    #gets credential input lengths
+
     if passwordlength>=4 and usernamelength>=4:
+        #sets minimum credential length 
         generate_new_user_folders()
         newDB()
         logintable()
@@ -53,12 +50,11 @@ def lengthcheck():
     else :
         length_label = tk.Label(frame,text="Credentials too short", font="20")
         length_label.grid(row=3,column=3, pady = 2, padx= 5)
-
+        #prints if too short
 
 
 
 import tkinter as tk ##from https://www.youtube.com/watch?v=D8-snVfekto&list=PLsmaE85R7RwyaAqcLC_XQlKuNbEQSy5Nv&index=1&t=3049s
-import random
 
 
 def date():
@@ -73,8 +69,6 @@ def date():
     month = today.strftime("%m")
     year = today.strftime("%Y")
 
-    print("The year is "+ year+" and the month is "+month+" and the day is "+day)
-
     global today_correct
     today_correct=today.strftime("%d.%m.%Y")
 
@@ -84,6 +78,7 @@ date()
 def mainmenu():
     import os
     os.system('python mainmenu.py')
+    #opens main menu
 
 def closewindow():
     root.destroy() #closes window
@@ -95,6 +90,7 @@ root.title("Journal Login")
 canvas = tk.Canvas(root, height=600, width=600)
 canvas.pack()
 
+#creates frame and entry fields
 frame= tk.Frame(root,bg= "light blue")
 frame.place(relx=0.1, rely=0.1, relwidth=0.8, relheight=0.8)
 
@@ -106,7 +102,6 @@ user_label.grid(row=1, column=0, pady = 2, padx= 5)
 
 user_entry = tk.Entry(frame)
 user_entry.grid(row=1, column=1)
-
 
 password_label = tk.Label(frame,text="Password \n(4 characters minimum)", font="15")
 password_label.grid(row=2, column=0, pady = 2, padx= 5)
@@ -137,8 +132,6 @@ def generate_new_user_folders(): ##creates new journal folder for a new user
         journalfile_success_label.grid(row=4,column=1)
         print("I'll now try to make a date folder in the newly created journal folder")
         save_path_date = user_desktop+"/%s" %today_correct #this one is for the date folder in the journal file
-        
-        
         
         try:
             os.mkdir(save_path_date)
@@ -172,8 +165,6 @@ def newDB():
         cursorObj.execute("CREATE TABLE Entries(ID text PRIMARY KEY, Title text, FilePath text, Day integer, Month integer, Year integer, Hour integer, Minute integer, Mood integer, Label text, WordCount integer)") 
         ##creates table with columns for use in the journal database
 
-
-
         con.commit() ##writes to db
 
     con = sql_connection()
@@ -195,45 +186,14 @@ def logintable():
       cursorObj = con.cursor()
       ##creates columns
       cursorObj.execute("CREATE TABLE Login2(Username text, Password text)") 
-      con.commit() ##writes to db
+      con.commit() ##creates login table in database
   con = sql_connection()
   sql_table(con) ##calls the create table function with the connection function as an argument
 
 
 
 new_button = tk.Button(frame,text="Register as new user", command=lambda: [lengthcheck()])
+#calls length checker which calls the rest of the functions if conditions are met
 new_button.grid(row=3,column=0)
 
-def generate_existing_user_date():
-    import os.path
-    user_profile = os.environ['USERPROFILE'] ##gets username from windows
-    user_current_date = user_profile + "\Desktop/journal_text/"+today_correct ##makes a path to current date folder
-    print ("The file path is "+user_current_date)
-
-    if os.path.isdir(user_current_date): ##this means if its true then continue
-        print ("The folder for todays date already exists")
-        dateexists_label = tk.Label(frame,text= "The folder for todays date already exists")
-        dateexists_label.grid(row=4, column=1)
-        
-
-    else:
-        print ("The folder for todays date doesnt exist. Lets create one.") ##if date folder for today doesnt exist
-        
-        
-        try:
-            os.mkdir(user_current_date) ##makes current date_folder
-        except OSError:
-            print ("Creation of the directory %s failed" % user_current_date) ##in case of error, unrelated to if folder exists
-            datefail_label = tk.Button(frame,text= "Creation of the directory %s failed" % user_current_date)
-            datefail_label.grid(row=5, column=1)
-        print ("The folder for todays date has been created")
-        datesuccess_label = tk.Label(frame,text= "The folder for todays date has been created")
-        datesuccess_label.grid(row=5, column=1)
-
-#existing_button = tk.Button(frame,text="Log in as existing user", command=lambda: [existingUser()])
-#existing_button.grid(row=3,column=2)
-
-#enter_button = tk.Button(frame,text= "Enter program (fake)")
-#enter_button.grid(row=5, column=2) 
 root.mainloop() ##runs tkinter
-
