@@ -22,7 +22,7 @@ question = tk.Label(frame, font= ('Helvetica', 20, ),pady=20,text= "What would y
 question.grid(row=1, column=0)
 
 def newrun():
-    os.system('python Tkinter/winging/newentry_dropdown.py')
+    os.system('python New_Entry.py')
 
 def closewindow():
     root.destroy()
@@ -31,7 +31,7 @@ newbutton = tk.Button(frame, pady=20,text="Create New Entry",font= ('Helvetica',
 newbutton.grid(row=2, column=0)
 
 def existrun():
-    os.system('python Tkinter/winging/dbdisplay+existing.py')
+    os.system('python Existing_Entry.py')
 
 existingbutton = tk.Button(frame, pady=20,text="Edit Existing Entry", font= ('Helvetica', 20, ),command=lambda: [closewindow(), existrun(), ])
 existingbutton.grid(row=3, column=0)

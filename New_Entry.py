@@ -1,5 +1,4 @@
 
-from this import d
 import tkinter as tk ##from https://www.youtube.com/watch?v=D8-snVfekto&list=PLsmaE85R7RwyaAqcLC_XQlKuNbEQSy5Nv&index=1&t
 from tkinter import scrolledtext
 from tkinter.ttk import OptionMenu
@@ -60,8 +59,7 @@ def title_check():
     else:
         smalltitle = tk.Label(frame,text="Two characters needed for title",)
         smalltitle.grid(row=5,column=2, pady = 2, padx= 5) ##leaves pixel space between adjacent objects
-
-        
+    
 
 
 def write_journal():
@@ -212,16 +210,6 @@ def trends():
 
 trends()
 root.mainloop()
-
-
-
-
-
-##had problems forever doing nothing
-#ss some errors
-##found stack overflow explaining the code
-##now its calm
-##finding better way than manual trend1, trend2 :)
 
 
 #https://stackoverflow.com/questions/46495160/make-a-label-bold-tkinter

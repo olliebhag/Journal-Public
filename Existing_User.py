@@ -1,19 +1,19 @@
 ##----Functions need to be above
 def newuser():
     ##direct from https://www.makeuseof.com/encrypt-password-in-python-bcrypt/
-    import bcrypt
+    
+    username =user_entry.get()
 
+    import bcrypt
     
-    
+    password = str(user_entry.get()) 
 
     # Encode the stored password:
     password = password.encode('utf-8')
-    
-
 
     # Encrypt the stored password:
     hashed = bcrypt.hashpw(password, bcrypt.gensalt(10)) 
-
+  
     import sqlite3
     ## tutorial from https://likegeeks.com/python-sqlite3-tutorial/#Create_Connection
     con = sqlite3.connect('Journal.db') ##make sure this is actually the right database
@@ -32,25 +32,6 @@ def newuser():
     sql_insert(con, entities)
 
     #print (password)    
-
-def lengthcheck():
-    global username
-    username =user_entry.get()
-
-    global password
-    password = str(password_entry.get())
-    usernamelength = len(username)
-    passwordlength = len(password)
-    if passwordlength>=4 and usernamelength>=4:
-        generate_new_user_folders()
-        newDB()
-        logintable()
-        newuser()
-        mainmenu()
-    else :
-        length_label = tk.Label(frame,text="Credentials too short", font="20")
-    length_label.grid(row=3,column=3, pady = 2, padx= 5)
-
 
 def existingUser():
     username = str(user_entry.get())
@@ -140,7 +121,7 @@ date()
 def mainmenu():
     
     import os
-    os.system('python Tkinter/winging/mainmenu.py')
+    os.system('python mainmenu.py')
 
 def closewindow():
     root.destroy() #closes window
@@ -165,7 +146,7 @@ user_entry = tk.Entry(frame)
 user_entry.grid(row=1, column=1)
 
 
-password_label = tk.Label(frame,text="Password \n(4 characters minimum)", font="15")
+password_label = tk.Label(frame,text="Password", font="15")
 password_label.grid(row=2, column=0, pady = 2, padx= 5)
 
 password_entry = tk.Entry(frame,show="*",) 
@@ -258,8 +239,8 @@ def logintable():
 
 
 
-new_button = tk.Button(frame,text="Register as new user", command=lambda: [lengthcheck()])
-new_button.grid(row=3,column=0)
+#new_button = tk.Button(frame,text="Register as new user", command=lambda: [generate_new_user_folders(), newDB(), logintable(), newuser(), mainmenu()])
+#new_button.grid(row=3,column=0)
 
 def generate_existing_user_date():
     import os.path
@@ -287,8 +268,8 @@ def generate_existing_user_date():
         datesuccess_label = tk.Label(frame,text= "The folder for todays date has been created")
         datesuccess_label.grid(row=5, column=1)
 
-#existing_button = tk.Button(frame,text="Log in as existing user", command=lambda: [existingUser()])
-#existing_button.grid(row=3,column=2)
+existing_button = tk.Button(frame,text="Log in as existing user", command=lambda: [existingUser()])
+existing_button.grid(row=3,column=1)
 
 #enter_button = tk.Button(frame,text= "Enter program (fake)")
 #enter_button.grid(row=5, column=2) 
