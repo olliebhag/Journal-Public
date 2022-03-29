@@ -12,7 +12,6 @@ canvas.pack()
 frame= tk.Frame(root,bg= "light blue")
 frame.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.7) ##rel=relative to screen size
 
-#frame.grid_rowconfigure(0, weight=1)
 frame.grid_columnconfigure(0, weight=1) #from https://www.tutorialspoint.com/how-to-horizontally-center-a-widget-using-a-grid-in-tkinter
 
 journal_label = tk.Label(frame,text="Journal",pady=20,font= ('Helvetica', 40, "bold"))
@@ -43,10 +42,6 @@ def getpassword():
 def logoutzip():
     import os.path
     user_profile = os.environ['USERPROFILE']
-    user_desktop = user_profile + "/Desktop/journal_text"
-
-    
-    
 
     #writes archive of journal text folder
     import py7zr #https://py7zr.readthedocs.io/en/latest/user_guide.html?highlight=password#
@@ -64,15 +59,13 @@ def logoutzip():
     # location
     location = user_profile+"/Desktop/journal_text"
     
-    # removing directory
+    # removing folder
     shutil.rmtree(location)
     print ("Journal text folder deleted")
 
 
 
 exitbutton = tk.Button(frame, pady=20,text="Log Out\n(Type password first)",font= ('Helvetica', 20, ), command=lambda: [getpassword(),logoutzip(),closewindow(),])
-#exitbutton = tk.Button(frame, pady=20,text="Log Out\nType password first", command=logoutzip())
-
 exitbutton.grid(row=4, column=0)
 
 password = tk.Entry(frame,)

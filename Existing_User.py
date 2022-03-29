@@ -6,13 +6,14 @@ attempts = int(attempts)
 def attempt_count():
     global attempts
     attempts = attempts + 1
-    if attempts== 5:
+    if attempts>= 5:
         closewindow()
+    #limits number of incorrect login attempts by incrementing the number of attempts 
+
     else:
         existingUser()
 
 def existingUser():
- 
 
     username = str(user_entry.get())
     passwordinput = str(password_entry.get()) 
@@ -22,12 +23,10 @@ def existingUser():
     # Encode the inputted password:
     passwordinput = passwordinput.encode('utf-8')
 
-    # Encrypt the stored pasword:
-    #hashedinput = bcrypt.hashpw(passwordinput, bcrypt.gensalt(10)) 
-
     filecon = sqlite3.connect("Journal.db")
     cursorObj = filecon.cursor()
 
+    #get hashed password from database
     cursorObj.execute("SELECT Password FROM Login2 WHERE Username = ?", (username,)) ##IMPORTANT COMMA HERE
     gethashdb=cursorObj.fetchall()
     print (gethashdb)
@@ -41,8 +40,10 @@ def existingUser():
     replacelist3_hash=replacelist2_hash.replace("b'", "")
     replacelist4_hash=replacelist3_hash.replace("'", "")
 
-    hasheddb= replacelist4_hash
+    hasheddb= replacelist4_hash #unnecessary characters now replaced
+
     hasheddb= hasheddb.encode('utf-8')
+    #encode in a unicode system
     
     print ("The stripped hash is "+str(hasheddb))
 
@@ -60,6 +61,7 @@ def existingUser():
         wrongpass_label.grid(row=6, column=1)
 
 def existingzip():
+    #unencrypt the encrypted journal archive using the login password
     import os.path
     user_profile = os.environ['USERPROFILE']
 
@@ -72,7 +74,6 @@ def existingzip():
 
 
 import tkinter as tk ##from https://www.youtube.com/watch?v=D8-snVfekto&list=PLsmaE85R7RwyaAqcLC_XQlKuNbEQSy5Nv&index=1&t=3049s
-import random
 
 
 def date():
@@ -87,23 +88,25 @@ def date():
     month = today.strftime("%m")
     year = today.strftime("%Y")
 
-    print("The year is "+ year+" and the month is "+month+" and the day is "+day)
-
     global today_correct
     today_correct=today.strftime("%d.%m.%Y")
 
     print("The date=", today_correct+"\n\n")
 date()
 
+def closewindow():
+    root.destroy()
+##from https://www.geeksforgeeks.org/how-to-close-a-window-in-tkinter/
+
+
 def mainmenu():
     import os
     os.system('python mainmenu.py')
-
-def closewindow():
-    root.destroy() #closes window
+    #opens main menu
 
 root = tk.Tk()
 
+#creates GUI
 root.title("Journal Login")
 canvas = tk.Canvas(root, height=600, width=600)
 canvas.pack()
@@ -136,7 +139,7 @@ def generate_existing_user_date():
     user_current_date = user_profile + "\Desktop/journal_text/"+today_correct ##makes a path to current date folder
     print ("The file path is "+user_current_date)
 
-    if os.path.isdir(user_current_date): ##this means if its true then continue
+    if os.path.isdir(user_current_date): ##if directory existing is true then continue
         print ("The folder for todays date already exists")
         dateexists_label = tk.Label(frame,text= "The folder for todays date already exists")
         dateexists_label.grid(row=4, column=1)
@@ -159,7 +162,4 @@ def generate_existing_user_date():
 existing_button = tk.Button(frame,text="Log in as existing user", command=lambda: [attempt_count()])
 existing_button.grid(row=3,column=1)
 
-#enter_button = tk.Button(frame,text= "Enter program (fake)")
-#enter_button.grid(row=5, column=2) 
 root.mainloop() ##runs tkinter
-

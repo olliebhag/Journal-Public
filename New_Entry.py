@@ -36,11 +36,10 @@ def date():
 date()
 
 
-
 def get_title(): ##pass into DB later
     
     print (title_entry)
-    output= tk.Label(frame,text=title_entry.get()) ##forgot an extra bracket here?
+    output= tk.Label(frame,text=title_entry.get())
     output.grid(row=3, column=3)
 
 def get_mood():
@@ -49,8 +48,8 @@ def get_mood():
     output.grid(row=3, column=4)
 
 
-
 def title_check():
+    ##checks if title is above 2 characters
     title = title_entry.get()
     titlelength = len(title)
     if titlelength>=2:
@@ -75,18 +74,17 @@ def write_journal():
     
     
     file1 = open(completePath, "w")
-    userWrite=str(journal_text.get("1.0","end"))
+    userWrite=str(journal_text.get("1.0","end")) #gets all text box content in variable
 
-    file1.write(userWrite)
+    file1.write(userWrite) #writes all text box content to file
     file1.close()
 
-    fileCount = open(completePath, "rt")
-    data = fileCount.read()
-    words = data.split()
 
+    fileCount = open(completePath, "rt") #opens created file
+    data = fileCount.read() ##gets data from file
+    words = data.split() ##counts words in file by splitting
     global wordCount
     wordCount = len(words)
-    print(wordCount)   
     fileCount.close()
 
     newEntry()
@@ -98,7 +96,7 @@ def mainmenu():
 def newEntry():
     import sqlite3
     ## tutorial from https://likegeeks.com/python-sqlite3-tutorial/#Create_Connection
-    con = sqlite3.connect('Journal.db') ##make sure this is actually the right database
+    con = sqlite3.connect('Journal.db') 
     
     def sql_insert(con, entities):
     
@@ -114,17 +112,14 @@ def newEntry():
     userID = short_userTitle+today_correct #makes primary key
     print (userID)
     
-    ##filepath
-    import os
-    
     
     entities = (userID, title_entry.get(), completePath, day, month, year, hour, minute, options.get(), label_entry.get(), wordCount)
+    #gets entry properties and creates new db record
     
     sql_insert(con, entities)
 
     root.destroy()
     mainmenu()
-
 
 
 root = tk.Tk()
@@ -158,7 +153,7 @@ mood_options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10",]
 options = StringVar(root)
 options.set(mood_options[0]) #default value
 mood_entry = OptionMenu(frame, options, *mood_options) 
-##option menu with default values of 1 and options 1-10
+##mood dropdown menu with options 1-10
 mood_entry.grid(row=2, column=1)
 
 ##label
@@ -190,9 +185,8 @@ def trends():
 
     trends1 = API.get_place_trends(23424975)
 
-    # from the end of your code
-    # trends1 is a list with only one element in it, which is a 
-    # dict which we'll put in data.
+    #from https://stackoverflow.com/questions/21203260/python-get-twitter-trends-in-tweepy-and-parse-json
+    # trends1 is a list with only one element in it, which is a dict which we'll put in data
     data = trends1[0] 
     # grab the trends
     trends = data['trends']
@@ -200,14 +194,11 @@ def trends():
     names = [trend['name'] for trend in trends]
 
 
-    twitterlabel = tk.Label(frame, text="Trends", font= ('Helvetica', 18, 'bold'))
+    twitterlabel = tk.Label(frame, text="Trends", font= ('Helvetica', 18, 'bold')) ##from #https://stackoverflow.com/questions/46495160/make-a-label-bold-tkinter
     twitterlabel.grid(row=3, column=2)
     newlinenames= ('\n'.join(names[0:29])) #https://blog.finxter.com/python-list-to-string/#:~:text=What%20is%20this%3F,-Report%20Ad&text=python%20fast'''-,Solution%3A%20to%20convert%20a%20list%20of%20strings%20to%20a%20string,and%20returns%20a%20new%20string.
     trendslinelabel = tk.Label(frame, text=newlinenames)
     trendslinelabel.grid(row=4, column=2, padx=10)
-
-    print(names[2:5])
-    #print(names[2:5])
 
     ##important https://stackoverflow.com/questions/21203260/python-get-twitter-trends-in-tweepy-and-parse-json
 
@@ -216,4 +207,3 @@ trends()
 root.mainloop()
 
 
-#https://stackoverflow.com/questions/46495160/make-a-label-bold-tkinter

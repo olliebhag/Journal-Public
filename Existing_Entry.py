@@ -165,12 +165,6 @@ def existing_entry():
 
     root2.mainloop()
 
-    ##insert command is up there^
-    ##sql get filepath where primary key is "input"
-    ##pass filepath into function to read text from txt file
-    ##use insert to pass into text box
-    ## test writing over it i think it already does
-    ##submit button should redo the mood and wordcount and write over db entry
 
 
 
@@ -267,7 +261,6 @@ key_label.grid(row=3, column=0)
 key_entry=tk.Entry(tree_frame)
 key_entry.grid(row=4, column=0)
 
-##keep commenting youll get there
 
 
 def getfilepath():
@@ -283,32 +276,15 @@ def getfilepath():
     cursorObj = filecon.cursor()
 
     cursorObj.execute("SELECT FilePath FROM Entries WHERE ID = ?", (primary_key,)) ##IMPORTANT COMMA HERE
-    ##didnt like "" for fields so change to ''
-    ##also didnt like using variables as "search term"
-    ## this meant i used the WHERE" + variable method
-    ## this randomly only worked with the number ones not the string ones
-    ##so i used this from here https://www.kite.com/python/answers/how-to-bind-variables-to-a-sql-query-in-sqlite3-in-python
-    ##it STILL DOESNT WORK WHY
-    ##this helped how mental is that its literally a comma https://stackoverflow.com/questions/16856647/sqlite3-programmingerror-incorrect-number-of-bindings-supplied-the-current-sta
-    ##struggling to call function for select db because input hasnt globalled yet
-    #and cant call at end of function because it doesnt like it
+    #gets filepath based on primary key
 
     files=cursorObj.fetchall()
-    #print (files)
 
     global filepath
     filepath=str(files)
 
-
-    #nice_filepath= str(replacelist2_filepath)
-
-    #print ("\n\n\n\nThe updated filepath is this: \n"+nice_filepath) 
-
-
     filecon.close()
 
-
-    ##gets primary key and prints it for now
 
 def gettitle():
     import sqlite3
@@ -335,9 +311,7 @@ def gettitle():
 
     title= str(replacelist2_title)
 
-    print ("what a cool title: "+title)
-
-
+    #gets title from db and deletes unnecessary characters
 
     titlecon.close()
 
@@ -369,7 +343,7 @@ def getlabel():
 
     print ("what a cool label: "+label)
 
-
+    #gets label from db and deletes unnecessary characters
 
     con.close()
 
@@ -400,6 +374,7 @@ def getmood():
 
     print ("new mood: "+mood)
 
+    #gets mood from db and deletes unnecessary characters
 
 
     con.close()
@@ -413,13 +388,14 @@ def closewindow():
 def mainmenu():
     import os
     os.system('python mainmenu.py')
+    #opens main menu
 
 
 close_button = tk.Button(tree_frame, text= "Go Back", command= lambda:[closewindow(), mainmenu()])
-close_button.grid(row=6, column=6)
+close_button.grid(row=6, column=6) #go back to main menu instead of opening an entry
 
 edit_button = tk.Button(tree_frame, text="Edit",command=lambda: [getfilepath(), gettitle(), getlabel(), getmood(), closewindow(),existing_entry(), ])
-
+#calls functions to open an existing entry
 edit_button.grid(row=5)
 
 root.mainloop()
