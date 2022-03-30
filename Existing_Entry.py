@@ -83,8 +83,6 @@ def existing_entry():
            cursorObj.execute(query, sqldata)
            con.commit()
        
-       ##filepath
-       import os
        
        
        #entities = (wordCount, primary_key)
@@ -92,12 +90,12 @@ def existing_entry():
        sql_update(con)
 
 
-    def mainmenu():
+    def mainmenu2():
         root2.destroy()
         import os
         os.system('python mainmenu.py')
 
-
+    
     root2 = tk.Tk()
 
     root2.title("Edit an entry")
@@ -106,6 +104,10 @@ def existing_entry():
 
     existframe= tk.Frame(root2,bg= "#34568B")
     existframe.place(relx=0.1, rely=0.1, relwidth=0.8, relheight=0.8)
+
+    ##back button
+    back_button= button = tk.Button(existframe,text="Exit without\nsaving", font= ('Helvetica', 12, ),command=lambda: [mainmenu2()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
+    back_button.grid(row=2, column=2)
 
     ##design
     journal_label = tk.Label(existframe,text="Journal", font= ('Helvetica', 20, "bold"))
@@ -130,9 +132,7 @@ def existing_entry():
     label_label.grid(row=3, column=0)
 
     label_existing_label = tk.Label(existframe, width=40, text= label)
-    label_existing_label.grid(row=3, column=1)
-
-    ##journal write
+    label_existing_label.grid(row=3, column=1)    ##journal write
     journal_label = tk.Label(existframe,text="Write journal\nentry:",font= ('Helvetica', 18, ))
     journal_label.grid(row=4, column=0)
 
@@ -158,8 +158,8 @@ def existing_entry():
     journal_text.grid(row=4, column=1)
 
     ##button to trigger command / submit stuff
-    get_button= button = tk.Button(existframe,text="Save entry", font= ('Helvetica', 18, ),command=lambda: [write_journal(), updateEntry(),mainmenu()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
-    get_button.grid(row=2, column=2)
+    get_button= tk.Button(existframe,text="Save entry", font= ('Helvetica', 18, ),command=lambda: [write_journal(), updateEntry(),mainmenu2()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
+    get_button.grid(row=5, column=1, pady = 10, padx= 5)
 
 
 
@@ -385,13 +385,13 @@ def closewindow():
 ##from https://www.geeksforgeeks.org/how-to-close-a-window-in-tkinter/
 
 
-def mainmenu():
+def mainmenu1():
     import os
     os.system('python mainmenu.py')
     #opens main menu
 
 
-close_button = tk.Button(tree_frame, text= "Go Back", command= lambda:[closewindow(), mainmenu()])
+close_button = tk.Button(tree_frame, text= "Go Back", command= lambda:[closewindow(), mainmenu1()])
 close_button.grid(row=6, column=6) #go back to main menu instead of opening an entry
 
 edit_button = tk.Button(tree_frame, text="Edit",command=lambda: [getfilepath(), gettitle(), getlabel(), getmood(), closewindow(),existing_entry(), ])

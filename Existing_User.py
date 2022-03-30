@@ -1,4 +1,8 @@
 ##----Functions need to be above
+
+import tkinter as tk ##from https://www.youtube.com/watch?v=D8-snVfekto&list=PLsmaE85R7RwyaAqcLC_XQlKuNbEQSy5Nv&index=1&t=3049s
+
+
 global attempts
 attempts = 0
 attempts = int(attempts) 
@@ -60,6 +64,7 @@ def existingUser():
         wrongpass_label = tk.Label(frame,text= "Incorrect login")
         wrongpass_label.grid(row=6, column=1)
 
+
 def existingzip():
     #unencrypt the encrypted journal archive using the login password
     import os.path
@@ -73,7 +78,6 @@ def existingzip():
 
 
 
-import tkinter as tk ##from https://www.youtube.com/watch?v=D8-snVfekto&list=PLsmaE85R7RwyaAqcLC_XQlKuNbEQSy5Nv&index=1&t=3049s
 
 
 def date():
