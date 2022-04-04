@@ -1,5 +1,6 @@
 ##----Functions need to be above
 
+
 import tkinter as tk ##from https://www.youtube.com/watch?v=D8-snVfekto&list=PLsmaE85R7RwyaAqcLC_XQlKuNbEQSy5Nv&index=1&t=3049s
 
 
@@ -9,11 +10,27 @@ attempts = int(attempts)
 
 def attempt_count():
     global attempts
-    attempts = attempts + 1
-    if attempts>= 5:
+    
+    if attempts == 5:
         closewindow()
     #limits number of incorrect login attempts by incrementing the number of attempts 
 
+    else:
+        wronguser()
+
+def wronguser():
+    global attempts
+    attempts = attempts + 1
+    usernames = str(user_entry.get())
+    import sqlite3
+    filecon = sqlite3.connect("Journal.db")
+    cursorObj = filecon.cursor()
+
+    ##from https://stackoverflow.com/a/68058521/18181705
+    exist = cursorObj.execute("select Username from Login2 where Username = ?", (usernames,)).fetchone()
+    if exist is None:
+        wrongpass_label = tk.Label(frame,text= "Incorrect login")
+        wrongpass_label.grid(row=6, column=1)
     else:
         existingUser()
 
@@ -118,17 +135,17 @@ canvas.pack()
 frame= tk.Frame(root,bg= "light blue")
 frame.place(relx=0.1, rely=0.1, relwidth=0.8, relheight=0.8)
 
-journal_label = tk.Label(frame,text="Journal", font="20")
+journal_label = tk.Label(frame,text="Journal", font=("Calibri", 20, "bold"))
 journal_label.grid(row=0,column=0, pady = 2, padx= 5)
 
-user_label = tk.Label(frame,text="User", font="15")
+user_label = tk.Label(frame,text="User", font=("Calibri", 14))
 user_label.grid(row=1, column=0, pady = 2, padx= 5)
 
 user_entry = tk.Entry(frame)
 user_entry.grid(row=1, column=1)
 
 
-password_label = tk.Label(frame,text="Password", font="15")
+password_label = tk.Label(frame,text="Password", font=("Calibri", 14))
 password_label.grid(row=2, column=0, pady = 2, padx= 5)
 
 password_entry = tk.Entry(frame,show="*",) 
@@ -163,7 +180,7 @@ def generate_existing_user_date():
         datesuccess_label = tk.Label(frame,text= "The folder for todays date has been created")
         datesuccess_label.grid(row=5, column=1)
 
-existing_button = tk.Button(frame,text="Log in as existing user", command=lambda: [attempt_count()])
+existing_button = tk.Button(frame,text="Log in as existing user", font=("Calibri", 12,),command=lambda: [attempt_count()])
 existing_button.grid(row=3,column=1)
 
-root.mainloop() ##runs tkinter
+root.mainloop() ##runs tkinter code

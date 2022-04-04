@@ -94,16 +94,16 @@ canvas.pack()
 frame= tk.Frame(root,bg= "light blue")
 frame.place(relx=0.1, rely=0.1, relwidth=0.8, relheight=0.8)
 
-journal_label = tk.Label(frame,text="Journal", font="20")
+journal_label = tk.Label(frame,text="Journal", font=("Calibri", 20, "bold"))
 journal_label.grid(row=0,column=0, pady = 2, padx= 5)
 
-user_label = tk.Label(frame,text="User", font="15")
+user_label = tk.Label(frame,text="User", font=("Calibri", 14,))
 user_label.grid(row=1, column=0, pady = 2, padx= 5)
 
 user_entry = tk.Entry(frame)
 user_entry.grid(row=1, column=1)
 
-password_label = tk.Label(frame,text="Password \n(4 characters minimum)", font="15")
+password_label = tk.Label(frame,text="Password \n(4 characters minimum)", font=("Calibri", 14,))
 password_label.grid(row=2, column=0, pady = 2, padx= 5)
 
 password_entry = tk.Entry(frame,show="*",) 
@@ -192,8 +192,8 @@ def logintable():
 
 
 
-new_button = tk.Button(frame,text="Register as new user", command=lambda: [lengthcheck()])
+new_button = tk.Button(frame,text="Register as new user", font=("Calibri", 14,),command=lambda: [lengthcheck()])
 #calls length checker which calls the rest of the functions if conditions are met
-new_button.grid(row=3,column=0)
+new_button.grid(row=3,column=1)
 
 root.mainloop() ##runs tkinter

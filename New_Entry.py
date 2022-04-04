@@ -56,7 +56,7 @@ def title_check():
         write_journal()
     
     else:
-        smalltitle = tk.Label(frame,text="Two characters needed for title",)
+        smalltitle = tk.Label(frame,text="Two characters \nneeded for title",font= ('Calibri', 12,))
         smalltitle.grid(row=5,column=2, pady = 2, padx= 5) ##leaves pixel space between adjacent objects
     
 
@@ -128,7 +128,7 @@ def newEntry():
 root = tk.Tk()
 
 root.title("Text maker")
-canvas = tk.Canvas(root, height=900, width=900)
+canvas = tk.Canvas(root, height=970, width=900)
 canvas.pack() ##creates canvas in root and defines size
 
 frame= tk.Frame(root,bg= "#34568B")
@@ -136,22 +136,22 @@ frame.place(relx=0.1, rely=0.1, relwidth=0.8, relheight=0.8)
 ##places frame with position and size relative to the window
 
 ##design
-journal_label = tk.Label(frame,text="Journal", font= ('Helvetica', 20, "bold"))
+journal_label = tk.Label(frame,text="Journal", font= ('Calibri', 20, "bold"))
 journal_label.grid(row=0,column=0, pady = 2, padx= 5) ##leaves pixel space between adjacent objects
 
-back_button= button = tk.Button(frame,text="Exit without\nsaving", font= ('Helvetica', 12, ),command=lambda: [closewindow(),mainmenu()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
+back_button= button = tk.Button(frame,text="Exit without\nsaving", font= ('Calibri', 16, ),command=lambda: [closewindow(),mainmenu()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
 back_button.grid(row=2, column=2, pady = 10)
 
 
 ##title
-title_label = tk.Label(frame,text="Title (Don't use similar titles\n on the same day):",font= ('Helvetica', 11, ) )
+title_label = tk.Label(frame,text="Title (Don't use similar titles\n on the same day):",font= ('Calibri', 11, ) )
 title_label.grid(row=1,column=0)
 
 title_entry = tk.Entry(frame, width=40)
 title_entry.grid(row=1, column=1)
 
 ##mood
-mood_label = tk.Label(frame,text="Mood (1-10):",font= ('Helvetica', 18, ))
+mood_label = tk.Label(frame,text="Mood (1-10):",font= ('Calibri', 18, ))
 mood_label.grid(row=2, column=0)
 
 ##from https://stackoverflow.com/questions/45441885/how-can-i-create-a-dropdown-menu-from-a-list-in-tkinter
@@ -164,23 +164,23 @@ mood_entry = OptionMenu(frame, options, *mood_options)
 mood_entry.grid(row=2, column=1)
 
 ##label
-label_label = tk.Label(frame,text="Enter a label:",font= ('Helvetica', 18, ))
+label_label = tk.Label(frame,text="Enter a label:",font= ('Calibri', 18, ))
 label_label.grid(row=3, column=0)
 
 label_entry = tk.Entry(frame, width=10)
 label_entry.grid(row=3, column=1)
 
 ##journal write
-journal_label = tk.Label(frame,text="Write journal\nentry:",font= ('Helvetica', 18, ))
+journal_label = tk.Label(frame,text="Write journal\nentry:",font= ('Calibri', 18, ))
 journal_label.grid(row=4, column=0)
 
-journal_text = scrolledtext.ScrolledText(frame,width=40,height=30)
+journal_text = scrolledtext.ScrolledText(frame,width=40,height=28,font= ('Calibri', 11, ))
 #use this for entry editor https://www.codegrepper.com/code-examples/python/python+tkinter+entry+prefilled+field
 journal_text.grid(row=4, column=1)
 
 ##button to trigger command / submit stuff
-get_button= button = tk.Button(frame,text="Save Entry",font= ('Helvetica', 18, ), command=lambda: [get_title(), get_mood(), title_check()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
-get_button.grid(row=5, column=1, pady = 10, padx= 5)
+get_button= button = tk.Button(frame,text="Save Entry",font= ('Calibri', 18, ), command=lambda: [get_title(), get_mood(), title_check()]) ##get from https://www.youtube.com/watch?v=7A_csP9drJw
+get_button.grid(row=5, column=1, pady = 6, padx= 5)
 
 def trends():
     import tweepy
@@ -201,7 +201,7 @@ def trends():
     names = [trend['name'] for trend in trends]
 
 
-    twitterlabel = tk.Label(frame, text="Trends", font= ('Helvetica', 19, 'bold')) ##from #https://stackoverflow.com/questions/46495160/make-a-label-bold-tkinter
+    twitterlabel = tk.Label(frame, text="Trends", font= ('Calibri', 19, 'bold')) ##from #https://stackoverflow.com/questions/46495160/make-a-label-bold-tkinter
     twitterlabel.grid(row=3, column=2)
     newlinenames= ('\n'.join(names[0:29])) #https://blog.finxter.com/python-list-to-string/#:~:text=What%20is%20this%3F,-Report%20Ad&text=python%20fast'''-,Solution%3A%20to%20convert%20a%20list%20of%20strings%20to%20a%20string,and%20returns%20a%20new%20string.
     trendslinelabel = tk.Label(frame, text=newlinenames)
